@@ -16,7 +16,7 @@ pandoc -s index.md --template _template_.html -o index.html
 
 The downloadable docx file can be generated using :
 ```
-pandoc -s index.md index.docx
+pandoc -s index.md -o index.docx
 ```
 
 ## Authors
