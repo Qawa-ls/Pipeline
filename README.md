@@ -20,4 +20,5 @@ pandoc -s index.md -o index.docx
 ```
 
 ## Authors
-Sylvain L.
+Guillaume R.
+Hugo C.
