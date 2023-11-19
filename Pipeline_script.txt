@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', changelog: false, credentialsId: 'Github_ssh', url: 'git@github.com:Qawa-ls/Pipeline.git'
+               //sh 'git clone https://github.com/Qawa-ls/Pipeline.git'
+            }
+        }
+        stage('Build') {
+            parallel {
+                stage('Liste fichiers') {
+                    steps {
+                        sh 'pandoc -s index.md --template _template_.html -o index.html'
+                    }
+                }
+                stage('Liste processus') {
+                    steps {
+                        sh 'pandoc -s index.md -o index.docx'
+                    }
+                }
+        stage('Test') {
+		    steps {
+		       sh 'tidy -e index.html'
+		            }
+                }
+            }
+        }
+    }
+    post {
+        success {
+            archiveArtifacts artifacts: 'index.html, index.docx', followSymlinks: false
+        }
+    }
+}
